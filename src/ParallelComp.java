@@ -1,2 +1,2 @@
-public class ParallelCalc {
+class ParallelComp {
 }
