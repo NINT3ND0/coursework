@@ -9,9 +9,13 @@ public class Main {
         double B = 10;
 
         SequentialComp seqComp = new SequentialComp(xNodes, tNodes, a, b, A, B);
-        //PrecisedComp precisedComp = new PrecisedComp(a, b, A, B, tNodes, xNodes);
-        double[][] seqResult = seqComp.getResult();
-        //double[][] precisedResult = precisedComp.getResult();
+        PrecisedComp precisedComp = new PrecisedComp(a, b, A, B, tNodes, xNodes);
+        ParallelComp paralComp = new ParallelComp(xNodes, tNodes, a, b, A, B);
+
+
+        double[][] seqResult = seqComp.computeResult();
+        double[][] precisedResult = precisedComp.computeResult();
+        double[][] paralResult = paralComp.computeResult();
 
         for(int i = 0; i < tNodes; i++){
             for(int j =0; j < xNodes;j++){
@@ -22,12 +26,22 @@ public class Main {
         System.out.println();
 
 
-      /*  for(int i = 0; i < tNodes; i++){
+        for(int i = 0; i < tNodes; i++){
             for(int j =0; j < xNodes;j++){
                 System.out.print(precisedResult[i][j] + "|");
             }
             System.out.println();
-        }*/
+        }
+
+        System.out.println();
+
+
+        for(int i = 0; i < tNodes; i++){
+            for(int j =0; j < xNodes;j++){
+                System.out.print(paralResult[i][j] + "|");
+            }
+            System.out.println();
+        }
 
     }
 }
