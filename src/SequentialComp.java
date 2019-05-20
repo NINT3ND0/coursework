@@ -4,6 +4,26 @@ class SequentialComp extends PrecisedComp{
         super(a, b, A, B, tNodes, xNodes);
     }
 
+    double[][] computeResult()
+    {
+
+        for(int i = 0; i < xNodes; i++){
+            result[0][i] = this.computePrecValue( i * hStep, 0 );
+        }
+
+        for(int i = 1; i < tNodes; i++){
+
+            result[i][0] = this.computePrecValue(0.0, i * tauStep);
+            result[i][xNodes - 1] = this.computePrecValue( 1.0, i * tauStep);
+
+            for(int j = 1; j < xNodes - 1; j++){
+                result[i][j] = computeValue(i, j);
+            }
+        }
+        return result;
+    }
+
+
     private double computeValue(int i, int j){
         double current = result[i-1][j];
         double prev = result[i-1][j-1];
@@ -16,27 +36,6 @@ class SequentialComp extends PrecisedComp{
         return current + part3;
     }
 
-    double[][] computeResult()
-    {
-        double x = 0;
-        for(int i = 0; i < xNodes; i++){
-            result[0][i] = this.computePrecValue( x, 0 );
-            x += hStep;
-        }
 
-        double t = tauStep;
-        for(int i = 1; i < tNodes; i++){
-
-            result[i][0] = this.computePrecValue(0, t);
-            result[i][xNodes - 1] = this.computePrecValue( 1, t);
-            t += tauStep;
-
-            for(int j = 1; j < xNodes - 1; j++){
-                //seqResult[i][j] = precisedValue.getValue(i*tauStep, j*hStep);
-                result[i][j] = computeValue(i, j);
-            }
-        }
-        return result;
-    }
 
 }

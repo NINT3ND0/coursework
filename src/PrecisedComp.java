@@ -13,25 +13,23 @@ class PrecisedComp {
         this.result =  new double[tNodes][xNodes];
     }
 
+
+    double[][] computeResult()
+    {
+        for(int i = 0; i < tNodes; i++){
+            for(int j = 0; j < xNodes; j++){
+                result[i][j] = computePrecValue(j * hStep, i * tauStep);
+            }
+        }
+        return result;
+    }
+
+
     double computePrecValue(double x, double t){
         double F = (3 * B - 2 * a * t) / 3;
         double tempResult = (Math.pow(x, 2) / F) + (A * Math.pow(F,-3)) + ((9 * b * F )/ (8 * a));
 
         return (1.0 / Math.cbrt(tempResult));
-    }
-
-    double[][] computeResult()
-    {
-        double t = 0;
-        for(int i = 0; i < tNodes; i++){
-            double x = 0;
-            for(int j = 0; j < xNodes; j++){
-                result[i][j] = computePrecValue(x, t);
-                x += hStep;
-            }
-            t += tauStep;
-        }
-        return result;
     }
 
 
@@ -44,5 +42,4 @@ class PrecisedComp {
     double tauStep;
     int xNodes;
     int tNodes;
-
 }
